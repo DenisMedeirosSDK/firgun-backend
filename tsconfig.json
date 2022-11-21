@@ -14,7 +14,8 @@
       "@/*": ["*"],
       "@/tests/*": ["../tests/*"]
     },
-    "strict": true
+    "strict": true,
+    "strictPropertyInitialization": false
   },
   "include": ["src", "tests"]
 }
