@@ -1,9 +1,9 @@
+import { inject, injectable } from 'tsyringe'
 import { validationCnpjCpf } from '../../../../shared/utils/validation-cpf-cnpj'
 import { Customer } from '../../entities/customer'
 import { Survey } from '../../entities/survey'
 import { CustomerRepository } from '../../repositories/customer-repository'
 import { SurveyRepository } from '../../repositories/survey-repository'
-
 interface CreateCustomerContactRequest {
   customer: Customer
   surveys: Array<{
@@ -12,9 +12,13 @@ interface CreateCustomerContactRequest {
   }>
 }
 
+@injectable()
 export class CreateCustomerContactUseCase {
   constructor (
+    @inject('CustomerRepository')
     private readonly customerRepository: CustomerRepository,
+
+    @inject('SurveyRepository')
     private readonly surveysRepository: SurveyRepository
   ) {}
 

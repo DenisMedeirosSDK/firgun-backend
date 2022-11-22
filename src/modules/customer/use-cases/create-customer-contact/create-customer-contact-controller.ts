@@ -1,7 +1,8 @@
+import { container } from 'tsyringe'
 import { z, ZodError } from 'zod'
 import { STATUS_CODES } from '../../../../shared/utils/statusCode'
 import { Customer } from '../../entities/customer'
-import { makeCreateCustomerContactFactory } from '../../factories/create-customer-contact-factory'
+import { CreateCustomerContactUseCase } from './create-customer-contact-use-case'
 
 const schema = z.object({
   name: z.string(),
@@ -51,11 +52,11 @@ export class CreateCustomerContactCotroller {
         }
       }
 
-      const factory = makeCreateCustomerContactFactory()
+      const createUseCase = container.resolve(CreateCustomerContactUseCase)
 
-      const usecase = await factory.execute({ customer, surveys })
+      const result = await createUseCase.execute({ customer, surveys })
 
-      return response.status(STATUS_CODES.CREATED_201).json(usecase)
+      return response.status(STATUS_CODES.CREATED_201).json(result)
     } catch (error) {
       if (error instanceof ZodError) {
         return response.status(STATUS_CODES.BAD_REQUEST_400).json(error)

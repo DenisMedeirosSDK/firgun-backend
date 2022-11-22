@@ -4,7 +4,12 @@ import { Customer, CustomerProps } from '../../entities/customer'
 import { CustomerRepository } from '../customer-repository'
 
 export class InMemoryCustomerRepository implements CustomerRepository {
-  customers: CustomerProps[] = []
+  private readonly customers: CustomerProps[] = []
+
+  async list (): Promise<CustomerProps[]> {
+    return this.customers
+  }
+
   async create ({ props }: Customer): Promise<CustomerProps> {
     const customer: CustomerProps = {
       id: randomUUID(),

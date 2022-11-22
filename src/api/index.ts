@@ -1,4 +1,6 @@
 import 'dotenv/config'
+import 'reflect-metadata'
+import '../shared/container'
 
 import http from 'node:http'
 import { app } from './app'
