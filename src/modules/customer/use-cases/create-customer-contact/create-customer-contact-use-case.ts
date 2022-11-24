@@ -30,6 +30,10 @@ export class CreateCustomerContactUseCase {
       return { message: 'Error document not valid' }
     }
 
+    const findCustomerByEmail = await this.customerRepository.findCustomerByEmail(customer.props.email)
+
+    if (findCustomerByEmail !== null) return { message: 'Customer alredy exists' }
+
     const client = await this.customerRepository.create(customer)
 
     if (client.id !== undefined) {

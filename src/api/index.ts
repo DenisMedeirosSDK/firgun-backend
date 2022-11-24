@@ -3,6 +3,7 @@ import 'reflect-metadata'
 import '../shared/container'
 
 import http from 'node:http'
+import { prisma } from '../shared/utils/prisma'
 import { app } from './app'
 
 const PORT = process.env.PORT ?? 3000
@@ -22,7 +23,8 @@ process.on('unhandledRejection', (error) => {
 function gracefulShutdown (event: string) {
   return (code: number) => {
     console.log(`${event} received! with ${code}`)
-    server.close(() => {
+    server.close(async () => {
+      await prisma.$disconnect()
       console.log(`Closed express server with exit code ${code}`)
       process.exit(code)
     })

@@ -1,0 +1,42 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+enum DocumentType {
+  cpf
+  cnpj
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  lastName  String
+  email     String   @unique
+  phone     String
+  phone1    String
+  birthDate DateTime
+
+  zipcode      String
+  state        String
+  city         String
+  street       String
+  streetNumber String
+  neighborhood String
+
+  docType   DocumentType
+  docNumber String
+}
+
+model Survey {
+  id         String @id @default(cuid())
+  question   String
+  answer     String
+  customerId String
+}
