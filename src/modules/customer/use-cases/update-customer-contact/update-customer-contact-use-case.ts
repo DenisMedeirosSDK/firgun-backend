@@ -36,12 +36,6 @@ export class UpdateCustomerContactUseCase {
       return { message: 'Error document not valid' }
     }
 
-    if (data.id !== undefined) {
-      const customer = await this.customerRepository.findCustomerById(data.id)
-
-      if ((customer?.id) !== null) {
-        await this.customerRepository.updateCustomer(data)
-      }
-    }
+    await this.customerRepository.updateCustomer(data)
   }
 }

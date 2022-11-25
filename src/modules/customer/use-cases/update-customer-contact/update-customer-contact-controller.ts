@@ -47,5 +47,7 @@ export class UpdateCustomerContact {
         return response.status(STATUS_CODES.BAD_REQUEST_400).json(error)
       }
     }
+
+    return response.end()
   }
 }

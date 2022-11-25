@@ -80,7 +80,22 @@ export class PrismaCustomerRepository implements CustomerRepository {
       where: {
         id: data.id
       },
-      data
+      data: {
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        phone1: data.phone1,
+        birthDate: new Date(data.birthDate),
+        city: data.city,
+        neighborhood: data.neighborhood,
+        state: data.state,
+        street: data.street,
+        streetNumber: data.streetNumber,
+        zipcode: data.zipcode,
+        docNumber: data.docNumber,
+        docType: data.docType
+      }
     })
   }
 
