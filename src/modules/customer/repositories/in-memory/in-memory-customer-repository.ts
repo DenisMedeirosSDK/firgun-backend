@@ -5,6 +5,14 @@ import { CustomerRepository, UpdateCustomerContactRequest } from '../customer-re
 
 export class InMemoryCustomerRepository implements CustomerRepository {
   private readonly customers: CustomerProps[] = []
+  async findDocument (docNumber: string): Promise<CustomerProps | null> {
+    const customerExist = this.customers.find(customer => customer.document.docNumber === docNumber)
+
+    if (customerExist === undefined) return null
+
+    return customerExist
+  }
+
   async findCustomerById (id: string): Promise<CustomerProps | null> {
     const customerExist = this.customers.find(customer => customer.id === id)
 

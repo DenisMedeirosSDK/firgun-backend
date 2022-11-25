@@ -34,6 +34,10 @@ export class CreateCustomerContactUseCase {
 
     if (findCustomerByEmail !== null) return { message: 'Customer alredy exists' }
 
+    const checkCustomerExistWithDocument = await this.customerRepository.findDocument(customer.props.document.docNumber)
+
+    if (checkCustomerExistWithDocument !== null) return { message: 'Customer alredy exists' }
+
     const client = await this.customerRepository.create(customer)
 
     if (client.id !== undefined) {
