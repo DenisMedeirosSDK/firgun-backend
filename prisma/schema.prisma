@@ -40,3 +40,10 @@ model Survey {
   answer     String
   customerId String
 }
+
+model Account {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  password String
+  isAdmin  Boolean?
+}
