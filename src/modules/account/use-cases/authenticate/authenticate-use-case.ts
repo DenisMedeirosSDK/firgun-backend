@@ -1,6 +1,7 @@
 import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
 import { inject, injectable } from 'tsyringe'
+import { CONFIGS } from '../../../../config'
 import { AccountRepository } from '../../repositories/account-repository'
 
 interface IAuthenticateRequest {
@@ -32,7 +33,7 @@ export class AuthenticateUserUseCase {
       {
         email: user.email
       },
-      'SuperSecretKey',
+      CONFIGS.JSON_SECRET,
       {
         subject: user.id,
         expiresIn: '1d'

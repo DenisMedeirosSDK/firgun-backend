@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { verify } from 'jsonwebtoken'
+import { CONFIGS } from '../../config'
 
 interface IPayload {
   sub: string
@@ -19,7 +20,7 @@ export function ensureAuthenticated (
   const [, token] = authToken.split(' ')
 
   try {
-    const { sub } = verify(token, 'SuperSecretKey') as IPayload
+    const { sub } = verify(token, CONFIGS.JSON_SECRET) as IPayload
 
     request.user_id = sub
     return next()
