@@ -20,7 +20,7 @@ export function ensureAuthenticated (
   const [, token] = authToken.split(' ')
 
   try {
-    const { sub } = verify(token, CONFIGS.JSON_SECRET) as IPayload
+    const { sub } = verify(token, CONFIGS.JWT_SECRET) as IPayload
 
     request.user_id = sub
     return next()

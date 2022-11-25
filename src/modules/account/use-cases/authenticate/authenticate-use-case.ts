@@ -33,7 +33,7 @@ export class AuthenticateUserUseCase {
       {
         email: user.email
       },
-      CONFIGS.JSON_SECRET,
+      CONFIGS.JWT_SECRET,
       {
         subject: user.id,
         expiresIn: '1d'
