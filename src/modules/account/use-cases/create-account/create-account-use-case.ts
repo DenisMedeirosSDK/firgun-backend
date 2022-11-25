@@ -15,7 +15,7 @@ export class CreateAccountUserUseCase {
     private readonly accountRepository: AccountRepository
   ) {}
 
-  async execute ({ email, password, isAdmin = false }: CreateAccountRequest) {
+  async execute ({ email, password, isAdmin }: CreateAccountRequest) {
     const user = await this.accountRepository.findByEmail(email)
 
     console.log(email, password)
@@ -26,6 +26,13 @@ export class CreateAccountUserUseCase {
 
     const passwordHash = await hash(password, 8)
 
+    if (isAdmin === null || isAdmin === undefined) {
+      await this.accountRepository.create({
+        email,
+        password: passwordHash,
+        isAdmin: false
+      })
+    }
     await this.accountRepository.create({
       email,
       password: passwordHash,

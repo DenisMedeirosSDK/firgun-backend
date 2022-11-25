@@ -3,6 +3,42 @@ import { Customer, CustomerProps } from '../../entities/customer'
 import { CustomerRepository, UpdateCustomerContactRequest } from '../customer-repository'
 
 export class PrismaCustomerRepository implements CustomerRepository {
+  async findDocument (docNumber: string): Promise<CustomerProps | null> {
+    const customer = await prisma.customer.findFirst({
+      where: {
+        docNumber
+      }
+    })
+
+    if (customer !== null) {
+      const customerFormmated: CustomerProps = {
+        id: customer.id,
+        name: customer.name,
+        lastName: customer.lastName,
+        email: customer.email,
+        phone: customer.phone,
+        phone1: customer.phone1,
+        birthDate: new Date(customer.birthDate),
+        address: {
+          city: customer.city,
+          neighborhood: customer.neighborhood,
+          state: customer.state,
+          street: customer.street,
+          streetNumber: customer.streetNumber,
+          zipcode: customer.zipcode
+        },
+        document: {
+          docNumber: customer.docNumber,
+          docType: customer.docType
+        }
+      }
+
+      return customerFormmated
+    }
+
+    return null
+  }
+
   async findCustomerById (id: string): Promise<CustomerProps | null> {
     const customer = await prisma.customer.findFirst({
       where: {
@@ -44,7 +80,22 @@ export class PrismaCustomerRepository implements CustomerRepository {
       where: {
         id: data.id
       },
-      data
+      data: {
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        phone1: data.phone1,
+        birthDate: new Date(data.birthDate),
+        city: data.city,
+        neighborhood: data.neighborhood,
+        state: data.state,
+        street: data.street,
+        streetNumber: data.streetNumber,
+        zipcode: data.zipcode,
+        docNumber: data.docNumber,
+        docType: data.docType
+      }
     })
   }
 

@@ -26,4 +26,5 @@ export interface CustomerRepository {
   findCustomerByEmail(email: string): Promise<CustomerProps | null >
   findCustomerById(id: string): Promise<CustomerProps | null >
   updateCustomer(data: UpdateCustomerContactRequest): Promise<void>
+  findDocument(docNumber: string): Promise<CustomerProps | null>
 }
